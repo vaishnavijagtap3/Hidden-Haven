@@ -1,6 +1,8 @@
 // src/main/java/com/hiddenplaces/entity/Review.java
 package com.hiddenplaces.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max; // Import this
 import jakarta.validation.constraints.Min; // Import this
@@ -29,5 +31,6 @@ public class Review extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id", nullable = false)
+    @JsonIgnore
     private Location location;
 }

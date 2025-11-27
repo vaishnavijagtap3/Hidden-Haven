@@ -43,6 +43,9 @@ const Navigation = () => {
                             <NavLink className="nav-link" to="/locations">Explore Locations</NavLink>
                         </li>
                         <li className="nav-item">
+                            <NavLink className="nav-link" to="/locations/edit">Locations Edit</NavLink>
+                        </li>
+                        <li className="nav-item">
                             <NavLink className="nav-link" to="/feedback">Give Feedback</NavLink>
                         </li>
                         <li className="nav-item">

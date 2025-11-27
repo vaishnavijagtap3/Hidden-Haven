@@ -14,7 +14,7 @@ import Footer from './component/Footer';
 // import AboutUs from './component/AboutUs';
 // import ContactUs from './component/ContactUs';
 import Locations from './component/Locations';
-// import LocationsEdit from './component/LocationsEdit';
+import LocationsEdit from './component/LocationsEdit';
 // import Feedback from './component/Feedback';
 
 // // Dashboard Components
@@ -48,6 +48,7 @@ function App() {
             
             {/* Location Routes */}
             <Route path="/locations" element={<Locations />} />
+            <Route path="/locations/edit" element={<LocationsEdit />} />
             
             {/* Protected Routes 
               (In a real app, you would wrap these in a PrivateRoute component 
