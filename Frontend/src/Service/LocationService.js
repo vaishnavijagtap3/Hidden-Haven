@@ -34,6 +34,9 @@ class LocationService {
         // reviewData should look like: { rating: 5, comment: "...", userId: 1, locationId: 5 }
         return axios.post(REVIEW_API_URL, reviewData, getAuthHeader());
     }
+    getAllReviews(){
+        return axios.get("http://localhost:8080/api/admin/reviews");
+    }
 }
 
 export default new LocationService();
