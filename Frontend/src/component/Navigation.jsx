@@ -12,7 +12,7 @@ const Navigation = () => {
         localStorage.removeItem('user');
         alert("Logged out successfully");
         navigate('/login');
-        window.location.reload(); 
+        window.location.reload();
     };
 
     return (
@@ -21,7 +21,7 @@ const Navigation = () => {
                 <Link className="navbar-brand fw-bold" to="/">
                     🌍 Hidden Places
                 </Link>
-                
+
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -36,18 +36,19 @@ const Navigation = () => {
                             <NavLink className="nav-link" to="/about">About Us</NavLink>
                         </li>
                         <li className="nav-item">
+                            <NavLink className="nav-link" to="/feedback">Give Feedback</NavLink>
+                        </li>
+                        <li className="nav-item">
                             <NavLink className="nav-link" to="/contact">Contact</NavLink>
                         </li>
 
                         {/* --- VIEWER & ADMIN SHARED LINKS (Must be logged in) --- */}
-                        {user && user.role === 'VIEWER' && (
+                        {user && (
                             <>
                                 <li className="nav-item">
                                     <NavLink className="nav-link" to="/locations">Explore Locations</NavLink>
                                 </li>
-                                <li className="nav-item">
-                                    <NavLink className="nav-link" to="/feedback">Give Feedback</NavLink>
-                                </li>
+
                             </>
                         )}
 
@@ -83,14 +84,14 @@ const Navigation = () => {
                             // --- LOGGED IN USER ---
                             <>
                                 <li className="nav-item">
-                                    <NavLink 
-                                        className="nav-link text-info" 
+                                    <NavLink
+                                        className="nav-link text-info"
                                         to={user.role === 'ADMIN' ? "/admin-dashboard" : "/viewer-dashboard"}
                                     >
                                         {user.role === 'ADMIN' ? "Admin Dashboard" : "My Dashboard"}
                                     </NavLink>
                                 </li>
-                                
+
                                 <li className="nav-item dropdown">
                                     <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                         Hello, {user.name}

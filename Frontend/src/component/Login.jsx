@@ -1,7 +1,14 @@
+
+
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+// Import the services
+import { storeToken } from '../Service/TokenService';
+import { storeUser } from '../Service/UserRoleService';
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
@@ -19,20 +26,35 @@ const Login = () => {
             // Call Backend
             const response = await axios.post('http://localhost:8080/auth/login', formData);
             
-            // 1. Save User object to Local Storage (Navigation uses this)
-            localStorage.setItem('user', JSON.stringify(response.data));
+            // Destructure the response to get token and user object
+            const { token, user } = response.data;
+
+            // 1. Store Token using TokenService
+            storeToken(token);
+
+            // 2. Store User object using UserService
+            // localStorage.setItem('user', JSON.stringify(response.data));
+            // console.log(response.data);
+            storeUser(user);
             
-            // 2. Alert and Redirect
+            // 3. Alert and Redirect
             alert("Login Successful!");
             
             // Redirect based on role
-            if (response.data.role === 'ADMIN') {
-                navigate('/admin-dashboard'); // Or '/locations-edit'
-            } else if (response.data.role === 'VIEWER') {
-                navigate('/viewer-dashboard'); // Or '/locations-edit'
-            }else {
-                navigate('/');
+            if (user.role === 'ADMIN') {
+                navigate('/admin-dashboard'); 
+            } else if (user.role === 'VIEWER') {
+                navigate('/viewer-dashboard');
+            } else {
+                navigate('/login');
             }
+            // if (response.data.role === 'ADMIN') {
+            //     navigate('/admin-dashboard'); // Or '/locations-edit'
+            // } else if (response.data.role === 'VIEWER') {
+            //     navigate('/viewer-dashboard'); // Or '/locations-edit'
+            // }else {
+            //     navigate('/login');
+            // }
             
             // Force reload to update Navigation bar state
             window.location.reload();
@@ -40,10 +62,15 @@ const Login = () => {
         } catch (err) {
             // Handle Error
             if (err.response && err.response.data) {
-                setError(err.response.data); // Message from backend
+                // Check if the backend returns a simple string or a JSON object
+                const errorMessage = typeof err.response.data === 'string' 
+                    ? err.response.data 
+                    : "Login failed. Please check your credentials.";
+                setError(errorMessage);
             } else {
-                setError("Login failed. Check console.");
+                setError("Login failed. Server might be down.");
             }
+            console.error(err);
         }
     };
 
